@@ -1,3 +1,5 @@
+package com.swansizz.kontroller
+
 import android.os.Bundle
 import android.widget.Button
 import android.widget.SeekBar
@@ -15,15 +17,19 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         val btnShutdown = findViewById<Button>(R.id.btnShutdown)
         val btnRestart = findViewById<Button>(R.id.btnRestart)
         val volumeControl = findViewById<SeekBar>(R.id.volumeControl)
+
         btnShutdown.setOnClickListener {
             sendRequest("shutdown")
         }
+
         btnRestart.setOnClickListener {
             sendRequest("restart")
         }
+
         volumeControl.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 sendRequest("volume/$progress")
@@ -32,10 +38,15 @@ class MainActivity : AppCompatActivity() {
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
+
+        val btnHostTrue = findViewById<Button>(R.id.btnHostTrue)
+        btnHostTrue.setOnClickListener {
+            sendRequest("test")
+        }
     }
 
     private fun sendRequest(command: String) {
-        val url = "http://88.230.255.95:5000/$command"
+        val url = "http://192.168.1.126:5000/$command"
         val request = Request.Builder().url(url).build()
 
         client.newCall(request).enqueue(object : Callback {
@@ -50,4 +61,5 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
+
 }
