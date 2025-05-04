@@ -1,0 +1,5 @@
+    <resources>
+        <string name="app_name">Kontroller</string>
+        <string name="shutdown_button">Kapat</string>
+        <string name="restart_button">Yeniden Başlat</string>
+    </resources>
